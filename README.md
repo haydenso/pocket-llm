@@ -1,6 +1,8 @@
-# Trinity Web - WebGPU LLM Chat
+# making llm inference in the browser go brrrrr
 
 A super lightweight web application that runs large language models directly in your browser using WebGPU acceleration.
+
+todos: add browser detection and to make sure the model can run.
 
 ## Features
 
@@ -34,14 +36,6 @@ const selectedModel = "Qwen2.5-0.5B-Instruct-q4f16_1-MLC";  // ~500MB
 
 For the complete list of supported models, visit: https://mlc.ai/models
 
-### Using Trinity-Nano Model
-
-To use the Trinity-Nano model mentioned in the inspiration, you'll need to:
-
-1. Convert the GGUF model to MLC format using [MLC-LLM](https://llm.mlc.ai/docs/deploy/webllm.html)
-2. Host the converted model files
-3. Update the model configuration in `main.js`
-
 ## Requirements
 
 - Modern browser with WebGPU support (Chrome 113+, Edge 113+)
@@ -51,18 +45,17 @@ To use the Trinity-Nano model mentioned in the inspiration, you'll need to:
 ## Getting Started
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
-
 2. **Start development server:**
+
    ```bash
    npm run dev
    ```
-
 3. **Open in browser:**
    Navigate to `http://localhost:5173`
-
 4. **Wait for model to load:**
    First run will download the model (~500MB). Subsequent loads will use browser cache.
 
@@ -93,12 +86,12 @@ trinity-web/
 
 ## Browser Compatibility
 
-| Browser | Support |
-|---------|---------|
-| Chrome 113+ | ✅ Full support |
-| Edge 113+ | ✅ Full support |
-| Safari | ⚠️ Limited (WebGPU experimental) |
-| Firefox | ❌ Not yet (WebGPU in development) |
+| Browser     | Support                            |
+| ----------- | ---------------------------------- |
+| Chrome 113+ | ✅ Full support                    |
+| Edge 113+   | ✅ Full support                    |
+| Safari      | ⚠️ Limited (WebGPU experimental) |
+| Firefox     | ❌ Not yet (WebGPU in development) |
 
 ## Performance Tips
 
@@ -110,15 +103,18 @@ trinity-web/
 ## Troubleshooting
 
 **"WebGPU is not supported"**
+
 - Update your browser to the latest version
 - Check if your GPU supports WebGPU
 
 **Model loading stuck**
+
 - Check your internet connection
 - Clear browser cache and try again
 - Check browser console for errors
 
 **Slow inference**
+
 - Try a smaller model
 - Close other GPU-intensive applications
 - Ensure you're not on battery saver mode

@@ -1,4 +1,4 @@
-import { CreateMLCEngine } from "@mlc-ai/web-llm";
+import { CreateMLCEngine, deleteModelAllInfoInCache } from "@mlc-ai/web-llm";
 
 // DOM elements
 const chatContainer = document.getElementById("chat-container");
@@ -44,6 +44,21 @@ async function initEngine() {
     progressContainer.style.display = "none";
     addSystemMessage(`Error: ${error.message}. Make sure WebGPU is supported in your browser.`);
   }
+}
+
+// Helper to delete an IndexedDB database and wait for completion
+function deleteIndexedDBAsync(name) {
+  return new Promise((resolve) => {
+    try {
+      const req = indexedDB.deleteDatabase(name);
+      req.onsuccess = () => { console.log('Deleted indexedDB', name); resolve(); };
+      req.onblocked = () => { console.warn('Delete blocked for indexedDB', name); resolve(); };
+      req.onerror = (e) => { console.warn('Error deleting indexedDB', name, e); resolve(); };
+    } catch (e) {
+      console.warn('deleteIndexedDBAsync exception', name, e);
+      resolve();
+    }
+  });
 }
 
 // Update status indicator
@@ -160,22 +175,49 @@ deleteCacheBtn.addEventListener("click", async () => {
   if (confirm("Are you sure you want to delete the model cache? This will require re-downloading the model.")) {
     try {
       updateStatus("Clearing cache...");
-      // Clear IndexedDB cache used by web-llm
-      const databases = await indexedDB.databases();
-      for (const db of databases) {
-        if (db.name && db.name.includes("web-llm")) {
-          indexedDB.deleteDatabase(db.name);
+
+      // Use the library helper to remove all model-related info first
+      try {
+        await deleteModelAllInfoInCache(selectedModel);
+        console.log("deleteModelAllInfoInCache succeeded for", selectedModel);
+      } catch (err) {
+        console.warn("deleteModelAllInfoInCache failed or not supported:", err);
+      }
+
+      // Clear IndexedDB databases that look like model caches
+      if (indexedDB && indexedDB.databases) {
+        const databases = await indexedDB.databases();
+        for (const db of databases) {
+          if (!db.name) continue;
+          const name = db.name.toLowerCase();
+          if (name.includes("web-llm") || name.includes("mlc") || name.includes("tvmjs") || name.includes(selectedModel.toLowerCase())) {
+            try { await deleteIndexedDBAsync(db.name); } catch (e) { console.warn("Failed to delete indexeddb", db.name, e); }
+          }
         }
       }
-      
-      // Clear Cache API if available
+
+      // Clear Cache API entries that look like model caches
       if ('caches' in window) {
         const cacheNames = await caches.keys();
         for (const name of cacheNames) {
-          if (name.includes("web-llm") || name.includes("transformers")) {
-            await caches.delete(name);
+          const n = name.toLowerCase();
+          if (n.includes("web-llm") || n.includes("transformers") || n.includes("tvmjs") || n.includes("mlc") || n.includes(selectedModel.toLowerCase()) || n.includes("tensor-cache")) {
+            try { await caches.delete(name); } catch (e) { console.warn("Failed to delete cache", name, e); }
           }
         }
+      }
+
+      // Unregister service workers that might hold model caches
+      if ('serviceWorker' in navigator && navigator.serviceWorker.getRegistrations) {
+        try {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) {
+            try {
+              await reg.unregister();
+              console.log('Unregistered service worker', reg);
+            } catch (e) { console.warn('Failed to unregister service worker', e); }
+          }
+        } catch (e) { console.warn('Error while checking service workers', e); }
       }
       
       updateStatus("Cache cleared. Please refresh the page.");
