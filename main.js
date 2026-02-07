@@ -28,7 +28,7 @@ async function initEngine() {
     engine = await CreateMLCEngine(selectedModel, {
       initProgressCallback: (progress) => {
         const percent = Math.round(progress.progress * 100);
-        updateStatus(`Loading model: ${percent}% - ${progress.text}`);
+        updateStatus(`Loading model: ${percent}% - ${progress.text}. Don't worry if it's stuck.`);
         updateProgressBar(percent);
       },
     });
