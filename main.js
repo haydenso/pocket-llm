@@ -9,7 +9,6 @@ const downloadBtn = document.getElementById("download-btn");
 const deleteCacheBtn = document.getElementById("delete-cache-btn");
 const progressContainer = document.getElementById("progress-container");
 const progressBar = document.getElementById("progress-bar");
-const progressFill = document.getElementById("progress-fill");
 
 // State
 let engine = null;
@@ -76,8 +75,7 @@ function updateStatus(text, ready = false) {
 
 // Update progress bar
 function updateProgressBar(percent) {
-  progressBar.setAttribute('aria-valuenow', percent);
-  progressFill.style.width = `${percent}%`;
+  progressBar.value = percent;
 }
 
 // Enable input after model loads
@@ -242,7 +240,7 @@ deleteCacheBtn.addEventListener("click", async () => {
 updateStatus("Please download the model to begin.", false);
 
 // Tab switching logic
-const tabs = document.querySelectorAll('menu[role="tablist"] li[role="tab"]');
+const tabs = document.querySelectorAll('menu[role="tablist"] button[role="tab"]');
 const tabPanels = document.querySelectorAll('article[role="tabpanel"]');
 
 tabs.forEach((tab, index) => {

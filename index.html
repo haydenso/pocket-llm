@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pocket Qwen - WebGPU LLM</title>
-  <link rel="stylesheet" href="https://unpkg.com/98.css">
+  <title>pocket llm</title>
+  <link rel="icon" type="image/png" href="windows.png">
+  <link rel="stylesheet" id="theme-stylesheet" href="https://unpkg.com/xp.css">
   <style>
     body {
       background: #C0C0C0;
@@ -154,23 +155,7 @@
     }
 
     #progress-bar {
-      height: 30px;
-      border: 2px solid #808080;
-      background: white;
-      position: relative;
-    }
-
-    #progress-fill {
-      height: 100%;
-      background: repeating-linear-gradient(
-        45deg,
-        #000080,
-        #000080 10px,
-        #0000a0 10px,
-        #0000a0 20px
-      );
-      width: 0%;
-      transition: width 0.3s ease;
+      width: 100%;
     }
 
     .placeholder-content {
@@ -178,7 +163,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      height: 100%;
+      align-items: center;
       justify-content: center;
     }
 
@@ -187,9 +172,15 @@
     }
 
     /* Make tab labels larger for readability */
-    menu[role="tablist"] li[role="tab"],
-    menu[role="tablist"] li[role="tab"] a {
+    menu[role="tablist"] button[role="tab"] {
       font-size: 16px;
+    }
+
+    .tabs {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     article[role="tabpanel"] {
@@ -219,50 +210,46 @@
       <div class="window-body">
         <p class="subtitle">all powered in the browser, no apis. making webgpu llms go brrr. built by&nbsp;<a href="https://haydenso.com">hayden so</a></p>
         
-        <menu role="tablist">
-          <li role="tab" aria-selected="true" aria-controls="qwen-tab">
-            <a href="#qwen-tab">Qwen</a>
-          </li>
-          <li role="tab" aria-controls="arcee-tab">
-            <a href="#arcee-tab">Arcee</a>
-          </li>
-        </menu>
+        <section class="tabs">
+          <menu role="tablist" aria-label="Model Tabs">
+            <button role="tab" aria-selected="true" aria-controls="qwen-tab">Qwen</button>
+            <button role="tab" aria-controls="arcee-tab">Arcee</button>
+          </menu>
 
-        <article role="tabpanel" id="qwen-tab">
-          <div class="chat-area" id="chat-container">
-            <div class="message system">
-              Please download the model to begin chatting.
+          <article role="tabpanel" id="qwen-tab">
+            <div class="chat-area" id="chat-container">
+              <div class="message system">
+                Please download the model to begin chatting.
+              </div>
             </div>
-          </div>
 
-          <div class="progress-container" id="progress-container" style="display: none;">
-            <div class="progress-label">Downloading model...</div>
-            <div role="progressbar" id="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-              <div id="progress-fill"></div>
+            <div class="progress-container" id="progress-container" style="display: none;">
+              <div class="progress-label">Downloading model...</div>
+              <progress max="100" value="0" id="progress-bar"></progress>
             </div>
-          </div>
 
-          <div class="input-area">
-            <input 
-              type="text" 
-              id="user-input" 
-              placeholder="Type your message here..." 
-              disabled
-            />
-            <button id="send-btn" disabled>Send</button>
-          </div>
-        </article>
-
-        <article role="tabpanel" id="arcee-tab" hidden>
-          <div class="placeholder-content">
-            <div class="message system">
-              Arcee model - To be added
+            <div class="input-area">
+              <input 
+                type="text" 
+                id="user-input" 
+                placeholder="Type your message here..." 
+                disabled
+              />
+              <button id="send-btn" disabled>Send</button>
             </div>
-            <p style="text-align: center; padding: 20px; color: #808080;">
-              This model will be available soon. Stay tuned!
-            </p>
-          </div>
-        </article>
+          </article>
+
+          <article role="tabpanel" id="arcee-tab" hidden>
+            <div class="placeholder-content">
+              <div class="message system">
+                Arcee model - To be added
+              </div>
+              <p style="text-align: center; color: #808080;">
+                This model will be available soon. Stay tuned!
+              </p>
+            </div>
+          </article>
+        </section>
 
         <div class="status-bar">
           <p class="status-bar-field">
@@ -274,11 +261,33 @@
         <div class="cache-controls">
           <button id="download-btn" class="download-button">Download Model</button>
           <button id="delete-cache-btn" class="cache-button">Delete Model Cache</button>
+          <select id="theme-selector" class="cache-button" style="margin-left: 8px;">
+            <option value="xp">XP.css</option>
+            <option value="7">7.css</option>
+            <option value="98">98.css</option>
+          </select>
         </div>
       </div>
     </div>
   </div>
 
   <script type="module" src="/main.js"></script>
+  <script>
+    // Theme switcher
+    const themeSelector = document.getElementById('theme-selector');
+    const themeStylesheet = document.getElementById('theme-stylesheet');
+    
+    // Load saved theme or default to XP.css
+    const savedTheme = localStorage.getItem('theme') || 'xp';
+    themeSelector.value = savedTheme;
+    themeStylesheet.href = `https://unpkg.com/${savedTheme}.css`;
+    
+    // Listen for theme changes
+    themeSelector.addEventListener('change', (e) => {
+      const theme = e.target.value;
+      themeStylesheet.href = `https://unpkg.com/${theme}.css`;
+      localStorage.setItem('theme', theme);
+    });
+  </script>
 </body>
 </html>
