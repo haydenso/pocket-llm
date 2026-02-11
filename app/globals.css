@@ -1,0 +1,231 @@
+/* Global styles ported from index.html */
+
+body {
+  background: #c0c0c0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 850px;
+  height: 90vh;
+  max-height: 700px;
+}
+
+.window {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.window-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0;
+}
+
+.status-bar {
+  margin: 0;
+  padding: 2px 4px;
+}
+
+.status-bar-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff00;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  background: white;
+  border: 2px inset #dfdfdf;
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message {
+  padding: 8px;
+  max-width: 80%;
+  font-size: 16px;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: #000080;
+  color: white;
+  border: 2px outset #dfdfdf;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf,
+    inset -2px -2px grey, inset 2px 2px #fff;
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background: #c0c0c0;
+  border: 2px inset #dfdfdf;
+  box-shadow: inset -1px -1px #ffffff, inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf, inset 2px 2px grey;
+}
+
+.message.system {
+  align-self: center;
+  background: #ffffe1;
+  border: 1px solid #000;
+  max-width: 90%;
+  font-weight: 600;
+  text-align: center;
+}
+
+.stats-bar {
+  padding: 4px 8px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.stats-bar.visible {
+  display: flex;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-label {
+  color: #000;
+  font-weight: 600;
+}
+
+.stat-value {
+  color: #000080;
+  font-weight: bold;
+}
+
+.input-area {
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.input-area input[type='text'] {
+  flex: 1;
+  font-size: 18px;
+  padding: 8px 12px;
+  height: 42px;
+}
+
+.input-area button {
+  font-size: 18px;
+  padding: 8px 16px;
+  height: 42px;
+}
+
+.progress-container progress {
+  width: 100%;
+}
+
+.subtitle {
+  text-align: center;
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.download-button {
+  font-size: 14px;
+  padding: 4px 12px;
+  font-weight: 600;
+}
+
+.cache-controls {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  border-top: 2px solid #808080;
+  background: #c0c0c0;
+}
+
+.cache-button {
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+.progress-container {
+  padding: 8px;
+  background: #c0c0c0;
+}
+
+.progress-label {
+  font-size: 14px;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.placeholder-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+menu[role='tablist'] {
+  margin: 8px 8px 0 8px;
+}
+
+menu[role='tablist'] button[role='tab'] {
+  font-size: 16px;
+}
+
+.tabs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+article[role='tabpanel'] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+article[role='tabpanel'][hidden] {
+  display: none;
+}

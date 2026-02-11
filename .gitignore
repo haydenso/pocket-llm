@@ -1,8 +1,19 @@
 # Dependencies
 node_modules/
 
-# Build output
+# Next.js build output
+.next/
+out/
+
+# Production build
 dist/
+build/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Local files
 *.local
 
 # Editor directories and files
@@ -28,3 +39,7 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+
+# Vercel
+.vercel
+

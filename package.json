@@ -1,22 +1,27 @@
 {
-  "name": "trinity-web",
+  "name": "pocket-llm-nextjs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "WebGPU-powered LLM inference in the browser",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": [],
+  "keywords": ["webgpu", "llm", "nextjs", "mlc"],
   "author": "",
   "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "@mlc-ai/web-llm": "^0.2.80",
-    "vite": "^7.3.1"
-  },
   "dependencies": {
-    "98.css": "^0.1.21"
+    "@mlc-ai/web-llm": "^0.2.80",
+    "98.css": "^0.1.21",
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0"
   }
 }
