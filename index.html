@@ -75,7 +75,7 @@
       gap: 8px;
     }
 
-    .message {
+       .message {
       padding: 8px;
       max-width: 80%;
       font-size: 16px;
@@ -105,17 +105,59 @@
       text-align: center;
     }
 
+    
+    .stats-bar {
+      padding: 4px 8px;
+      background: #c0c0c0;
+      border-top: 1px solid #808080;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    
+    .stats-bar.visible {
+      display: flex;
+    }
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .stat-label {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .stat-value {
+      color: #000080;
+      font-weight: bold;
+    }
+
     .input-area {
       padding: 8px;
       display: flex;
       gap: 8px;
     }
 
-    #user-input {
+    .input-area input[type="text"] {
       flex: 1;
       font-size: 18px;
       padding: 8px 12px;
       height: 42px;
+    }
+
+    .input-area button {
+      font-size: 18px;
+      padding: 8px 16px;
+      height: 42px;
+    }
+    
+    /* Ensure all progress bars are full width */
+    .progress-container progress {
+      width: 100%;
     }
 
     .subtitle {
@@ -152,10 +194,6 @@
       font-size: 14px;
       margin-bottom: 4px;
       text-align: center;
-    }
-
-    #progress-bar {
-      width: 100%;
     }
 
     .placeholder-content {
@@ -212,11 +250,47 @@
         
         <section class="tabs">
           <menu role="tablist" aria-label="Model Tabs">
-            <button role="tab" aria-selected="true" aria-controls="qwen-tab">Qwen</button>
+            <button role="tab" aria-selected="true" aria-controls="llama-tab">Llama3.2</button>
+            <button role="tab" aria-controls="qwen-tab">Qwen</button>
             <button role="tab" aria-controls="arcee-tab">Arcee</button>
+            <button role="tab" aria-controls="smolm-tab">SmolLM2</button>
           </menu>
 
-          <article role="tabpanel" id="qwen-tab">
+          <article role="tabpanel" id="llama-tab">
+            <div class="chat-area" id="llama-chat-container">
+              <div class="message system">
+                Please download the model to begin chatting.
+              </div>
+            </div>
+
+            <div class="progress-container" id="llama-progress-container" style="display: none;">
+              <div class="progress-label">Downloading model...</div>
+              <progress max="100" value="0" id="llama-progress-bar"></progress>
+            </div>
+
+            <div class="stats-bar" id="llama-stats-bar">
+              <div class="stat-item">
+                <span class="stat-label">Speed:</span>
+                <span class="stat-value" id="llama-tokens-per-sec">0 tok/s</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Tokens:</span>
+                <span class="stat-value" id="llama-token-count">0</span>
+              </div>
+            </div>
+
+            <div class="input-area">
+              <input 
+                type="text" 
+                id="llama-user-input" 
+                placeholder="Type your message here..." 
+                disabled
+              />
+              <button id="llama-send-btn" disabled>Send</button>
+            </div>
+          </article>
+
+          <article role="tabpanel" id="qwen-tab" hidden>
             <div class="chat-area" id="chat-container">
               <div class="message system">
                 Please download the model to begin chatting.
@@ -226,6 +300,17 @@
             <div class="progress-container" id="progress-container" style="display: none;">
               <div class="progress-label">Downloading model...</div>
               <progress max="100" value="0" id="progress-bar"></progress>
+            </div>
+
+            <div class="stats-bar" id="qwen-stats-bar">
+              <div class="stat-item">
+                <span class="stat-label">Speed:</span>
+                <span class="stat-value" id="qwen-tokens-per-sec">0 tok/s</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Tokens:</span>
+                <span class="stat-value" id="qwen-token-count">0</span>
+              </div>
             </div>
 
             <div class="input-area">
@@ -247,6 +332,40 @@
               <p style="text-align: center; color: #808080;">
                 This model will be available soon. Stay tuned!
               </p>
+            </div>
+          </article>
+
+          <article role="tabpanel" id="smolm-tab" hidden>
+            <div class="chat-area" id="smolm-chat-container">
+              <div class="message system">
+                Please download the model to begin chatting.
+              </div>
+            </div>
+
+            <div class="progress-container" id="smolm-progress-container" style="display: none;">
+              <div class="progress-label">Downloading model...</div>
+              <progress max="100" value="0" id="smolm-progress-bar"></progress>
+            </div>
+
+            <div class="stats-bar" id="smolm-stats-bar">
+              <div class="stat-item">
+                <span class="stat-label">Speed:</span>
+                <span class="stat-value" id="smolm-tokens-per-sec">0 tok/s</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Tokens:</span>
+                <span class="stat-value" id="smolm-token-count">0</span>
+              </div>
+            </div>
+
+            <div class="input-area">
+              <input 
+                type="text" 
+                id="smolm-user-input" 
+                placeholder="Type your message here..." 
+                disabled
+              />
+              <button id="smolm-send-btn" disabled>Send</button>
             </div>
           </article>
         </section>
