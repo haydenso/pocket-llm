@@ -8,11 +8,17 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "keywords": ["webgpu", "llm", "nextjs", "mlc"],
+  "keywords": [
+    "webgpu",
+    "llm",
+    "nextjs",
+    "mlc"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.80",
+    "@vercel/analytics": "^1.6.1",
     "98.css": "^0.1.21",
     "next": "^14.0.0",
     "react": "^18.2.0",
