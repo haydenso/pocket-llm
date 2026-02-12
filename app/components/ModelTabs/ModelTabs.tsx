@@ -13,7 +13,7 @@ interface ModelTabsProps {
   onSelectModel: (model: ModelKey) => void;
 }
 
-const TAB_ORDER: ModelKey[] = ['llama', 'qwen', 'arcee', 'smolm'];
+const TAB_ORDER: ModelKey[] = ['llama', 'qwen', 'deepseek', 'smolm', 'arcee'];
 
 export function ModelTabs({ selectedModel, onSelectModel }: ModelTabsProps) {
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {

@@ -2,7 +2,7 @@
  * Type definitions for application state and messages
  */
 
-export type ModelKey = 'llama' | 'qwen' | 'smolm' | 'arcee';
+export type ModelKey = 'llama' | 'qwen' | 'smolm' | 'arcee' | 'deepseek';
 
 export interface Message {
   role: 'system' | 'user' | 'assistant';

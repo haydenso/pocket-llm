@@ -21,7 +21,16 @@ export default function HomePage() {
 
   const { state, initEngine, sendMessage, deleteAllCaches } = useMlEngine();
 
-  const currentState = state[selectedModel];
+  const currentState = state[selectedModel] || {
+    engine: null,
+    messages: [],
+    loading: false,
+    progress: 0,
+    tokensPerSec: 0,
+    tokenCount: 0,
+    status: 'Please download the model to begin.',
+    error: undefined,
+  };
   const modelConfig = MODEL_CONFIGS[selectedModel];
 
   const handleSendMessage = async () => {
@@ -40,7 +49,7 @@ export default function HomePage() {
   };
 
   // For arcee placeholder
-  const isPlaceholder = !modelConfig.available;
+  const isPlaceholder = !modelConfig?.available;
   const showStats = currentState.tokensPerSec > 0 || currentState.tokenCount > 0;
 
   return (

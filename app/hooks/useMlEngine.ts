@@ -41,6 +41,7 @@ export function useMlEngine() {
     qwen: createInitialState(),
     smolm: createInitialState(),
     arcee: createInitialState(),
+    deepseek: createInitialState(),
   });
 
   // Refs for streaming optimization
@@ -49,6 +50,7 @@ export function useMlEngine() {
     qwen: '',
     smolm: '',
     arcee: '',
+    deepseek: '',
   });
 
   const streamingIntervalRef = useRef<Record<ModelKey, ReturnType<typeof setInterval> | null>>({
@@ -56,6 +58,7 @@ export function useMlEngine() {
     qwen: null,
     smolm: null,
     arcee: null,
+    deepseek: null,
   });
 
   /**
@@ -339,6 +342,7 @@ export function useMlEngine() {
           ],
         },
         arcee: createInitialState(),
+        deepseek: createInitialState(),
       });
     } catch (error: any) {
       console.error('Error clearing cache:', error);
